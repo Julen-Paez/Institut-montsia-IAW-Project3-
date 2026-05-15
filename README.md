@@ -7,7 +7,7 @@ Aplicació web per gestionar el material informàtic, assignacions i incidèncie
 
 ---
 
-## 📋 Índex
+## Índex
 
 1. [Requisits previs](#1-requisits-previs)
 2. [Estructura del projecte](#2-estructura-del-projecte)
