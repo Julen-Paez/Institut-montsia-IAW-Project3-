@@ -67,23 +67,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 informacio=?, dataOberta=?, dataTancada=?,
                 idAlumne=?, idDispositiu=?, idEstat=?
                 WHERE id=?");
-            $stmt->bind_param("sssiiit", $informacio, $dataOberta, $dataTancada,
+            $stmt->bind_param("sssiiii", $informacio, $dataOberta, $dataTancada,
                 $idAlumne, $idDispositiu, $idEstat, $idEdit);
-            // fix bind
-            $stmt->close();
-            $stmt2 = $conn->prepare("UPDATE Incidencies SET
-                informacio=?, dataOberta=?, dataTancada=?,
-                idAlumne=?, idDispositiu=?, idEstat=?
-                WHERE id=?");
-            $stmt2->bind_param("sssiii i", $informacio, $dataOberta, $dataTancada,
-                $idAlumne, $idDispositiu, $idEstat, $idEdit);
-            if ($stmt2->execute()) {
+            if ($stmt->execute()) {
                 $missatge = 'Incidència actualitzada correctament.';
             } else {
                 $missatge = 'Error: ' . $conn->error;
                 $tipusMissatge = 'error';
             }
-            $stmt2->close();
+            $stmt->close();
         }
         $accio = 'llistar';
     }
