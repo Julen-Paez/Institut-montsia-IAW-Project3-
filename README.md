@@ -48,7 +48,6 @@ projecte/                             Arrel del projecte. Conte la configuracio 
 |
 +-- sql/                              Scripts SQL que s'executen automaticament quan la BD s'inicia per primer cop.
 |   +-- 01_init.sql                   Crea totes les taules, relacions i inserta les dades de prova.
-|   +-- 02_passwords.sql              Procediment auxiliar de seguretat per a les contrasenyes.
 |
 +-- institut/                         Tot el codi font PHP de l'aplicacio web.
     |
@@ -97,9 +96,6 @@ S'executa quan el contenidor web arrenca. Espera que la BD estigui llesta i crid
 
 ### sql/01_init.sql
 S'executa automaticament quan el contenidor de la BD s'inicia per primer cop. Crea totes les taules, les relacions entre elles i inserta dades de prova (alumnes, material, incidencies i usuaris).
-
-### sql/02_passwords.sql
-Script SQL auxiliar amb un procediment per actualitzar les contrasenyes si cal.
 
 ### institut/docker-init.php
 Script PHP que s'executa automaticament en arrencar el contenidor. Genera hashes bcrypt correctes per a tots els usuaris de prova. No es accessible des del navegador.
