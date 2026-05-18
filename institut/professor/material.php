@@ -29,11 +29,11 @@ if ($accio === 'eliminar') denyIfCannot('eliminar');
 if ($accio === 'nou' && $_SERVER['REQUEST_METHOD'] !== 'POST') denyIfCannot('crear');
 
 // ══════════════════════════════════════════
-//  PROCESSAR POST
+//   PROCESSAR POST
 // ══════════════════════════════════════════
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $idTipus    = (int)$_POST['idTipus'];
+    $idTipus     = (int)$_POST['idTipus'];
     $idUbicacio = (int)$_POST['idUbicacio'];
     $idInventari     = trim($_POST['idInventari']     ?? '') ?: null;
     $etiquetaDepInf  = trim($_POST['etiquetaDepInf']  ?? '') ?: null;
@@ -53,8 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $conn->prepare("INSERT INTO Material
                 (idTipus, idInventari, etiquetaDepInf, numSerie, macEthernet, macWifi, SACE, dataAdquisicio, idUbicacio)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("isssssss i", $idTipus, $idInventari, $etiquetaDepInf, $numSerie,
+            
+            // CORREGIDO: "isssssssi" (9 caracteres para 9 variables, sin espacios)
+            $stmt->bind_param("isssssssi", $idTipus, $idInventari, $etiquetaDepInf, $numSerie,
                 $macEthernet, $macWifi, $SACE, $dataAdquisicio, $idUbicacio);
+                
             if ($stmt->execute()) {
                 $missatge = 'Material creat correctament.';
             } else {
@@ -64,13 +67,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->close();
 
         } elseif ($_POST['accio_form'] === 'editar') {
+            // ── UPDATE ──
             $idEdit = (int)$_POST['id'];
             $stmt = $conn->prepare("UPDATE Material SET
                 idTipus=?, idInventari=?, etiquetaDepInf=?, numSerie=?,
                 macEthernet=?, macWifi=?, SACE=?, dataAdquisicio=?, idUbicacio=?
                 WHERE id=?");
-            $stmt->bind_param("isssssssi i", $idTipus, $idInventari, $etiquetaDepInf, $numSerie,
+            
+            // CORREGIDO: "isssssssii" (10 caracteres para 10 variables, sin espacios)
+            $stmt->bind_param("isssssssii", $idTipus, $idInventari, $etiquetaDepInf, $numSerie,
                 $macEthernet, $macWifi, $SACE, $dataAdquisicio, $idUbicacio, $idEdit);
+                
             if ($stmt->execute()) {
                 $missatge = 'Material actualitzat correctament.';
             } else {
